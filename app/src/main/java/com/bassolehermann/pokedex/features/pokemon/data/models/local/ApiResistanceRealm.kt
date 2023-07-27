@@ -7,4 +7,6 @@ open class ApiResistanceRealm(
     override var damage_multiplier: Double,
     override var damage_relation: String,
     override var name: String
-):RealmObject, ApiResistance(damage_multiplier,damage_relation,name)
+):RealmObject, ApiResistance(damage_multiplier,damage_relation,name) {
+    constructor():this(0.0,"","")
+}

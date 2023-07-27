@@ -6,4 +6,6 @@ import io.realm.kotlin.types.RealmObject
 class ApiTypeRealm(
     override var image: String,
     override var name: String
-):RealmObject, ApiType(image,name)
+):RealmObject, ApiType(image,name) {
+    constructor():this("","")
+}

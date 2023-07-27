@@ -10,4 +10,6 @@ class StatsRealm(
     override var special_attack: Int,
     override var special_defense: Int,
     override var speed: Int
-): RealmObject, Stats(HP,attack,defense,special_attack,special_defense,speed)
+): RealmObject, Stats(HP,attack,defense,special_attack,special_defense,speed) {
+    constructor():this(0,0,0,0,0,0)
+}

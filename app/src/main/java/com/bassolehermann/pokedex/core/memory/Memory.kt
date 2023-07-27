@@ -8,11 +8,12 @@ import kotlin.io.path.Path
 import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.exists
+import kotlin.io.path.notExists
 import kotlin.io.path.pathString
 
 class FileCache<T>(
-    var read: ((file: File) -> T?)? = null,
-    var rootDirectory: Path,
+    private var read: ((file: File) -> T?)? = null,
+    private var rootDirectory: Path,
     var write: (data:T, targetFile: File) -> Unit
 ) : Cache<T> {
     private var useMemory:Boolean = false
@@ -21,7 +22,7 @@ class FileCache<T>(
 
     override suspend fun put(key: String, value: T): T? {
         var old:T? = get(key);
-        if (write!=null) {
+        if (write != null) {
             var file:File = targetFile(key)
             if (useMemory){
                 memoryCache.put(file.path, value)
@@ -74,7 +75,7 @@ class FileCache<T>(
         return targetFile.exists()
     }
 
-     fun keys():List<String> {
+     private fun keys():List<String> {
         var directory = Path(rootDirectory.pathString)
         var content = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             directory.toMutableList()
@@ -88,12 +89,12 @@ class FileCache<T>(
         return keys
     }
 
-    fun targetFile(key:String): File {
-        if (!rootDirectory.exists()){
+    private fun targetFile(key:String): File {
+        if (rootDirectory.notExists()){
             rootDirectory.createDirectory()
         }
         var entryName:String =  key.hashCode().toString()
-        var path:String = if(rootDirectory.pathString.endsWith("/") ) rootDirectory.pathString else  rootDirectory.pathString + "/"
+        var path:String = if( rootDirectory.pathString.endsWith("/") ) rootDirectory.pathString else  rootDirectory.pathString + "/"
         var out = File("$path$entryName")
         if(!out.exists()){
             out.createNewFile()
