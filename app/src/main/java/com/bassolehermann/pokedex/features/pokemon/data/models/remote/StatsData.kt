@@ -9,4 +9,4 @@ data class StatsData(
     override val special_attack: Int,
     override val special_defense: Int,
     override val speed: Int
-): Stats(HP,attack,defense,special_attack,special_defense,speed)
+): Stats

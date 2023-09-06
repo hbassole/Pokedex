@@ -6,4 +6,4 @@ data class ApiResistanceData(
     override val damage_multiplier: Double,
     override val damage_relation: String,
     override val name: String
-): ApiResistance(damage_multiplier,damage_relation,name)
+): ApiResistance

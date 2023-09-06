@@ -6,6 +6,6 @@ import io.realm.kotlin.types.RealmObject
 open class ApiEvolutionRealm(
     override var name: String,
     override var pokedexId: Int
-):RealmObject, ApiEvolution(name,pokedexId){
+):RealmObject, ApiEvolution {
     constructor() : this("",0)
 }

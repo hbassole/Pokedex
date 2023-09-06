@@ -1,6 +1,7 @@
 package com.bassolehermann.pokedex.features.pokemon.data.datasource
 import com.bassolehermann.pokedex.features.pokemon.data.models.remote.PokemonData
 import com.bassolehermann.pokedex.features.pokemon.data.models.remote.PokemonTypeData
+import dagger.Provides
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.GET
@@ -22,11 +23,10 @@ interface PokemonDataSource {
     suspend fun getPokemonTypes(): Response<List<PokemonTypeData>>
 }
 
-@Singleton
 class PokemonDataSourceImplement
-@Inject constructor(retrofit: Retrofit) : PokemonDataSource {
+@Inject constructor(private val retrofit: Retrofit) : PokemonDataSource {
 
-    private val retrofitApi: PokemonDataSource by lazy { retrofit.create(PokemonDataSource::class.java) }
+    private val retrofitApi: PokemonDataSource = retrofit.create(PokemonDataSource::class.java)
 
     override suspend fun getAllPokemon(): Response<List<PokemonData>> = retrofitApi.getAllPokemon()
 

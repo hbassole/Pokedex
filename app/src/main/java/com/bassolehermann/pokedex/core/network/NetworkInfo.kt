@@ -4,14 +4,16 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import javax.inject.Inject
 import javax.inject.Singleton
 
 interface NetworkInfo {
     suspend fun isConnected():Boolean
 }
 
-@Singleton
-class NetworkInfoImplement(private val context:Context): NetworkInfo {
+class NetworkInfoImplement @Inject constructor(
+    private val context: Context
+): NetworkInfo {
     override suspend fun isConnected(): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

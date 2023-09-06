@@ -1,18 +1,21 @@
 package com.bassolehermann.pokedex.features.pokemon.domain.entities
 
-open class Pokemon(
-    open val apiEvolutions: List<ApiEvolution>,
-    open val apiGeneration: Int,
-    open val apiPreEvolution: String,
-    open val apiResistances: List<ApiResistance>,
-    open val apiResistancesWithAbilities: List<Any>,
-    open val apiTypes: List<ApiType>,
-    open val id: Int,
-    open val image: String,
-    open val name: String,
-    open val pokedexId: Int,
-    open val resistanceModifyingAbilitiesForApi: List<Any>,
-    open val slug: String,
-    open val sprite: String,
-    open val stats: Stats
-)
+import java.lang.reflect.Array
+
+interface Pokemon{
+
+     val apiEvolutions: List<ApiEvolution>
+     val apiGeneration: Int
+     val apiPreEvolution: Any?
+     val apiResistances: List<ApiResistance>
+     //val apiResistancesWithAbilities: Array
+     val apiTypes: List<ApiType>
+     val id: Int
+     val image: String
+     val name: String
+     val pokedexId: Int
+     //val resistanceModifyingAbilitiesForApi: Array
+     val slug: String
+     val sprite: String
+     val stats: Stats?
+}

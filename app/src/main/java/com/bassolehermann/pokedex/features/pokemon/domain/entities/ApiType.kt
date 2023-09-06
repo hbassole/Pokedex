@@ -1,6 +1,6 @@
 package com.bassolehermann.pokedex.features.pokemon.domain.entities
 
-open class ApiType(
-    open val image: String,
-    open val name: String
-)
+interface ApiType {
+     val image: String
+     val name: String
+}

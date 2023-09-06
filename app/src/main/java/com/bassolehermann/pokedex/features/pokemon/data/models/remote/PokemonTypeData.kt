@@ -7,4 +7,4 @@ data class PokemonTypeData(
     override val id: Int,
     override val image: String,
     override val name: String
-) : PokemonType(englishName,id,image,name)
+) : PokemonType

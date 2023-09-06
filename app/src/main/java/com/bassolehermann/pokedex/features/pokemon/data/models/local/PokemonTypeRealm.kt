@@ -6,11 +6,11 @@ import io.realm.kotlin.types.annotations.PrimaryKey
 import org.mongodb.kbson.ObjectId
 
 open class PokemonTypeRealm(
-    override val englishName: String,
-    override val id: Int,
-    override val image: String,
-    override val name: String
-):RealmObject, PokemonType(englishName,id,image,name) {
+    override var englishName: String,
+    override var id: Int,
+    override var image: String,
+    override var name: String
+):RealmObject, PokemonType {
     @PrimaryKey
     var _id: ObjectId = ObjectId()
     constructor():this("",0,"","")

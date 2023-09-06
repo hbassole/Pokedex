@@ -1,16 +1,18 @@
 package com.bassolehermann.pokedex.features.pokemon.data.datasource
 import com.bassolehermann.pokedex.features.pokemon.data.models.local.PokemonRealm
 import com.bassolehermann.pokedex.features.pokemon.data.models.local.PokemonTypeRealm
+import com.bassolehermann.pokedex.features.pokemon.domain.entities.Pokemon
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
-import kotlinx.coroutines.CoroutineScope
+import io.realm.kotlin.mongodb.ext.insert
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 interface PokemonLocalDataSource {
+    suspend fun addPokemon(pokemon:PokemonRealm)
+    suspend fun addAllPokemon(pokemon:List<PokemonRealm>)
     suspend fun getLocalAllPokemon(): List<PokemonRealm>?
     suspend fun getLocalPokemonById(id:Int): PokemonRealm?
     suspend fun getLocalPokemonByName(name:String): PokemonRealm?
@@ -19,9 +21,22 @@ interface PokemonLocalDataSource {
     suspend fun deleteLocalPokemonType(id: Int):Boolean
 }
 
-@Singleton
 class PokemonLocalDataSourceImplement
-@Inject constructor(var realm:Realm) : PokemonLocalDataSource {
+@Inject constructor(private val realm:Realm) : PokemonLocalDataSource {
+    override suspend fun addPokemon(pokemon: PokemonRealm) {
+        return withContext(Dispatchers.IO){
+            return@withContext realm.write {
+                copyToRealm(pokemon)
+            }
+        }
+    }
+
+    override suspend fun addAllPokemon(pokemon: List<PokemonRealm>){
+       for (pokemonReal in pokemon){
+           addPokemon(pokemonReal)
+       }
+    }
+
     override suspend fun getLocalAllPokemon(): List<PokemonRealm>? {
        return withContext(Dispatchers.IO) {
            return@withContext realm.query<PokemonRealm>().find()
@@ -47,11 +62,36 @@ class PokemonLocalDataSourceImplement
     }
 
     override suspend fun deleteLocalPokemon(id: Int): Boolean {
-        TODO("Not yet implemented")
+        return  withContext(Dispatchers.Default){
+           var isSuccess:Boolean = false
+
+            realm.write {
+                var pokemon =  realm.query<PokemonRealm>("id == $0",id).first().find()
+                isSuccess = if (pokemon != null) {
+                    delete(pokemon)
+                    true;
+                } else {
+                    false
+                }
+            }
+            return@withContext isSuccess
+        }
     }
 
     override suspend fun deleteLocalPokemonType(id: Int): Boolean {
-        TODO("Not yet implemented")
+        return  withContext(Dispatchers.Default){
+            var isSuccess:Boolean = false
+            realm.write {
+                var pokemonType =  realm.query<PokemonTypeRealm>("id == $0",id).first().find()
+                isSuccess = if (pokemonType != null) {
+                    delete(pokemonType)
+                    true;
+                } else {
+                    false
+                }
+            }
+            return@withContext isSuccess
+        }
     }
 
 
