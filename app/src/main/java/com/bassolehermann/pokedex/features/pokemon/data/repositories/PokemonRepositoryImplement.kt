@@ -32,7 +32,7 @@ class PokemonRepositoryImplement
                 if (response.isSuccessful) {
                     var pokemons : List<PokemonData> = response.body()!!
                     var pokemonsRealm = pokemonsToPokemonRealms(pokemons)
-                    pokemonLocalDataSource.addAllPokemon(pokemonsRealm)
+                    //pokemonLocalDataSource.addAllPokemon(pokemonsRealm)
                     Either.Right(pokemons)
                 } else {
                     Either.Left(WebError(response.code(),response.message()))
