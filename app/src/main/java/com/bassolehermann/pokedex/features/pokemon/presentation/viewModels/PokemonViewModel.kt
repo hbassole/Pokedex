@@ -3,13 +3,9 @@ package com.bassolehermann.pokedex.features.pokemon.presentation.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.*
 import androidx.lifecycle.viewModelScope
 import com.bassolehermann.pokedex.core.error.Failure
 import com.bassolehermann.pokedex.features.pokemon.domain.entities.Pokemon
-import com.bassolehermann.pokedex.features.pokemon.domain.usecases.GetPokemonByIdUseCase
-import com.bassolehermann.pokedex.features.pokemon.domain.usecases.GetPokemonByNameUseCase
-import com.bassolehermann.pokedex.features.pokemon.domain.usecases.GetPokemonTypeUseCase
 import com.bassolehermann.pokedex.features.pokemon.domain.usecases.GetPokemonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -34,7 +30,7 @@ class PokemonViewModel @Inject constructor(
     private val _pokemonList: MutableLiveData<List<Pokemon>> = MutableLiveData<List<Pokemon>>()
     private var _hasError: MutableLiveData<Boolean> = MutableLiveData()
     private var _failure: MutableLiveData<Failure> = MutableLiveData<Failure>()
-    fun getPokemons(){
+    fun getPokemonList(){
         viewModelScope.launch {
             _loading.postValue(true)
              getPokemonUseCase.call().fold(

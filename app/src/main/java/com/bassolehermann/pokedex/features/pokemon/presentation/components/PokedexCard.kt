@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.absoluteOffset
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -35,8 +36,8 @@ import com.bumptech.glide.integration.compose.GlideImage
 fun PokedexCard(pokemon: Pokemon) {
     Box(
         modifier = Modifier
-            .height(150.dp)
-            .width(150.dp)
+            .height(200.dp)
+            .fillMaxWidth()
             .clip(shape = RoundedCornerShape(10.dp))
             .background(colorResource(id = Utils.pokemonColor(pokemon.apiTypes.first())))
     ) {
